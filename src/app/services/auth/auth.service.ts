@@ -21,6 +21,11 @@ export class AuthService {
             username: "doe",
             password: "doe123",
             roles: ["STUDENT"]
+        },
+        {
+            username: "tim",
+            password: "tim123",
+            roles: ["TEACHER"]
         }
     ];
     user = new BehaviorSubject<User|null>(null);

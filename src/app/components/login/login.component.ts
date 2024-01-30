@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth/auth.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { NgClass } from "@angular/common";
 import { Subscription } from "rxjs";
 
@@ -21,18 +21,32 @@ export class LoginComponent implements OnInit, OnDestroy {
         "password": new FormControl("", { nonNullable: true, validators: [Validators.required]})
     });
     $authUser: Subscription;
+    accessError = false;
 
-    constructor(private service: AuthService, private router: Router) {}
+    constructor(private service: AuthService, private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        this.$authUser = this.service.user.subscribe({
-            next: (data) => {
-                console.log(data)
-                if (data) {
-                    this.router.navigate(['/']).then((_) => void 0);
+        const _forward = ["/"];
+
+        this.route.queryParams.subscribe(
+            (_params: Params) => {
+                const params = new Map(Object.entries(_params).filter(([_, v]) => Boolean(v)));
+                _forward.splice(0, _forward.length, params.get("next") || "/");
+
+                if (params.has("code") && params.get("code") === "access") {
+                    this.loginForm.setErrors({ "accessDenied": true });
+                    this.accessError = true;
                 }
             }
-        })
+        );
+
+        this.$authUser = this.service.user.subscribe({
+            next: (data) => {
+                if (data) {
+                    this.router.navigate(_forward).then((_) => void 0);
+                }
+            }
+        });
     }
 
     ngOnDestroy(): void {
