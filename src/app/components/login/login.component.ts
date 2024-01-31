@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.$authUser = this.service.user.subscribe({
             next: (data) => {
                 if (data) {
-                    this.router.navigate(_forward).then((_) => void 0);
+                    this.router.navigate(_forward).then((_) => localStorage.setItem('user', JSON.stringify(data)));
                 }
             }
         });

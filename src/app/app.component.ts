@@ -22,6 +22,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.$authUser = this.authService.user.subscribe({
             next: (data) => this.user = data
         });
+
+        const user = localStorage.getItem("user");
+        if (user) {
+            this.authService.user.next(JSON.parse(user));
+        }
     }
 
     ngOnDestroy() {
@@ -29,6 +34,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     signOut() {
-        this.router.navigate(['sign-in']).then((_) => this.authService.user.next(null));
+        this.router.navigate(['sign-in']).then((_) => {
+            this.authService.user.next(null);
+            localStorage.removeItem("user")
+        });
     }
 }
