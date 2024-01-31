@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-md-8 left-bd">
-                <h2>Your Students</h2>
+                <h2 id="students-title">Your Students</h2>
 
                 @if (loaders.isLoadingStudents) {
                     <div class="loader-container">
@@ -31,7 +31,7 @@
                     </div>
                 } @else if (students.length > 0) {
                     <div class="table-responsive">
-                        <table class="table accounts-table" aria-describedby="accounts-header">
+                        <table class="table accounts-table" aria-describedby="students-title">
                             <thead class="gray-head">
                             <tr>
                                 <th>Name</th>

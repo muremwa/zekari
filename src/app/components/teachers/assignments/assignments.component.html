@@ -1,0 +1,120 @@
+<div class="container">
+    @if (loaders.isLoadingDetails) {
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
+
+    } @else if (teacher) {
+        <div class="dash-details">
+            <div class="row">
+                <h2 class="col-md-10" id="assignments-title">Assignments by {{ teacher.name }}</h2>
+                <div class="col-md-2">
+                    <button (click)="openModal(saveAssignmentModal)" class="btn btn-outline-dark btn-sm">Add Assignment</button>
+                </div>
+            </div>
+
+            @if (loaders.isLoadingAssignments) {
+                <div class="loader-container">
+                    <div class="loader"></div>
+                </div>
+            } @else if (assignments.length > 1) {
+                <div class="table-responsive">
+                    <table class="table accounts-table" aria-describedby="assignments-title">
+                        <thead class="gray-head">
+                            <tr>
+                                <th>Title</th>
+                                <th>Due Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for (assignment of assignments; track assignments) {
+                                <tr [id]="assignment.id">
+                                    <td>{{ assignment.title }}</td>
+                                    <td>{{ assignment.dueDate | date: 'MMM d, y, h:mm:ss a' }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-dark" (click)="expandDetails(assignment.id)">
+                                            {{ expanded.includes(assignment.id)? 'Close': 'View more' }}
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr [ngStyle]="{ display: expanded.includes(assignment.id)? '': 'none' }">
+                                    <td [colSpan]="4">
+                                        <div class="assignment-details">
+                                            <p>{{ assignment.description }}</p>
+                                            <p><small>Assigned to: {{ assignment.assignee }}</small></p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            } @else {
+                <h5 class="text-center">No assignments to show</h5>
+            }
+        </div>
+
+    } @else {
+        <h2 class="text-center">No Details to show</h2>
+    }
+</div>
+
+<ng-template #saveAssignmentModal>
+    <div class="modal-header">
+        <h4 class="modal-title">New Assignment</h4>
+        <a type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></a>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="assignmentForm" #form=ngForm (ngSubmit)="addAssignment()">
+            @if (assignmentForm.hasError("saving")) {
+                <div class="alert alert-danger" role="alert">
+                    An error occurred while saving
+                </div>
+            }
+
+            @if (assignmentForm.hasError("invalidDetails")) {
+                <div class="alert alert-danger" role="alert">
+                    Details are not valid
+                </div>
+            }
+
+            <div class="form-group space">
+                <label for="title-input">Title</label>
+                <input class="form-control" [ngClass]="{ 'is-invalid': checkInputInValidity(assignmentForm.controls.title, form) }" formControlName="title" placeholder="Enter a title" type="text" name="title" id="title-input">
+            </div>
+
+            <div class="row space">
+                <div class="form-group col-md-6">
+                    @if (loaders.isLoadingStudents) {
+                        <div class="loader"></div>
+                    }
+
+                    <label for="assignee-select">Assignees</label>
+                    <select [multiple]="true" formControlName="assignees" class="form-select" name="assignees" id="assignee-select" [ngClass]="{ 'is-invalid': checkInputInValidity(assignmentForm.controls.assignees, form) }">
+                        @for (name of studentNames; track studentNames) {
+                            <option value="{{ name }}">{{ name }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="date-input">Due Date</label>
+                    <input type="datetime-local" formControlName="dueDate" class="form-control" name="date" id="date-input" [ngClass]="{ 'is-invalid': checkInputInValidity(assignmentForm.controls.dueDate, form) }">
+                </div>
+            </div>
+
+            <div class="space form-group">
+                <label for="desc-input">Description</label>
+                <textarea class="form-control" formControlName="description" id="desc-input" name="desc" [ngClass]="{ 'is-invalid': checkInputInValidity(assignmentForm.controls.description, form) }"></textarea>
+            </div>
+
+            <div class="form-group save-group">
+                <input type="submit" value="save" class="btn btn-outline-dark">
+            </div>
+        </form>
+    </div>
+</ng-template>
+

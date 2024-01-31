@@ -44,8 +44,8 @@ export class TeacherDashboardComponent implements OnInit {
 
                     this.loaders.isLoadingStudents = true;
                     this.service.getStudents(this.user.username).subscribe(
-                        (data) => {
-                            this.students = data.data;
+                        (studentsData) => {
+                            this.students = studentsData.data;
                             this.loaders.isLoadingStudents = false;
                         }
                     );

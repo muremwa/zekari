@@ -5,6 +5,7 @@ import { StudentsDashboardComponent } from "./components/students/students-dashb
 import { TeacherDashboardComponent } from "./components/teachers/teacher-dashboard/teacher-dashboard.component";
 import { AdminDashboardComponent } from "./components/admins/admin-dashboard/admin-dashboard.component";
 import { StudentTrendsComponent } from "./components/students/student-trends/student-trends.component";
+import { AssignmentsComponent } from "./components/teachers/assignments/assignments.component";
 
 export const routes: Routes = [
     { path: "sign-in", component: LoginComponent },
@@ -16,5 +17,6 @@ export const routes: Routes = [
         children: [{ path: "trends", component: StudentTrendsComponent }]
     },
     { path: "teachers", component: TeacherDashboardComponent, canActivate: [authGuard] },
+    { path: "teachers/assignments", component: AssignmentsComponent, canActivate: [authGuard] },
     { path: "admin", component: AdminDashboardComponent, canActivate: [authGuard] }
 ];
