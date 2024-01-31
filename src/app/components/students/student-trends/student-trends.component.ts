@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Chart, ChartDataset, registerables } from "chart.js";
 import { StudentService } from "../../../services/students/student.service";
 import { Subscription } from "rxjs";
+import Utility from "../../../services/shared/Utility";
 
 @Component({
     selector: 'app-student-trends',
@@ -30,45 +31,9 @@ export class StudentTrendsComponent implements OnInit, AfterViewInit, OnDestroy 
                 const data = [..._data].reverse();
 
                 if (data.length > 0) {
-                    this.labels = data.map((res) => res.period);
-                    const datasetLabels = [...new Set(data.map((res) => Object.keys(res.results)).flat())];
-                    const rawData: Array<Array<number>> = Array.from(Array(datasetLabels.length), () => []);
-
-                    data.forEach((res) => {
-                        const items = Object.entries(res.results);
-
-                        items.forEach(([subject, score]) => {
-                            const subjectIndex = datasetLabels.findIndex((label) => label === subject);
-
-                            if (subjectIndex > -1) {
-                                rawData[subjectIndex].push(score)
-                            }
-                        })
-                    });
-
-                    this.data = datasetLabels.map((label, i) => {
-                        const labelColour = `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`;
-
-                        return {
-                            label,
-                            data: rawData[i],
-                            backgroundColor: labelColour,
-                            borderColor: labelColour,
-                            yAxisID: 'yAxis1'
-                        }
-                    });
-
-                    // averages
-                    this.data.push({
-                        label: 'Average',
-                        data: data.map((res) => {
-                            const scores = Object.entries(res.results).map(([_, sc]) => sc);
-                            return scores.length > 0? (scores.reduce((a, b) => a + b) / scores.length): 0;
-                        }),
-                        backgroundColor: "#008080",
-                        borderColor: "#0b1111",
-                        yAxisID: "yAxis2"
-                    })
+                    const trends = Utility.processStudentChartDetails(data);
+                    this.labels = trends.labels;
+                    this.data = trends.data;
 
                     const canvas = this.getCanvas();
                     if (canvas) {
@@ -107,19 +72,6 @@ export class StudentTrendsComponent implements OnInit, AfterViewInit, OnDestroy 
         if (this.chart) {
             this.chart.destroy();
         }
-
-        this.chart = new Chart(canvas, {
-            type: 'line',
-            data: { labels: this.labels, datasets: this.data },
-            options: {
-                plugins: {
-                    legend: { display: true, position: 'right' }
-                },
-                scales: {
-                    yAxis1: { type: 'linear', position: 'left' },
-                    yAxis2: { type: 'linear', position: 'right' },
-                }
-            }
-        });
+        this.chart = Utility.loadChartDetails(canvas, { labels: this.labels, data: this.data });
     }
 }

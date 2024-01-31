@@ -1,1 +1,81 @@
-<p>teacher-dashboard works!</p>
+<div class="container">
+
+    @if (loaders.isLoadingDetails) {
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
+    } @else if (teacher) {
+        <div class="container row dash-details">
+            <div class="col-md-4 row">
+                <h2 class="col-sm-12">Teacher Details</h2>
+
+                <span class="col-sm-5">Username</span>
+                <span class="col-sm-2">:</span>
+                <span class="col-sm-5">{{ user.username }}</span>
+
+                <span class="col-sm-5">Name</span>
+                <span class="col-sm-2">:</span>
+                <span class="col-sm-5">{{ teacher.name }}</span>
+
+                <span class="col-sm-5">Classes</span>
+                <span class="col-sm-2">:</span>
+                <span class="col-sm-5">{{ teacher.classes.join(", ") }}</span>
+            </div>
+
+            <div class="col-md-8 left-bd">
+                <h2>Your Students</h2>
+
+                @if (loaders.isLoadingStudents) {
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                    </div>
+                } @else if (students.length > 0) {
+                    <div class="table-responsive">
+                        <table class="table accounts-table" aria-describedby="accounts-header">
+                            <thead class="gray-head">
+                            <tr>
+                                <th>Name</th>
+                                <th>Class</th>
+                                <th>Latest Results Period</th>
+                                <th>Latest Average</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                                @for (student of students; track students) {
+                                    <tr [id]="student.name">
+                                        <td>{{ student.name }}</td>
+                                        <td>{{ student.grade }}</td>
+                                        <td>{{ student.results[0].period }}</td>
+                                        <td>{{ calculateAverage(student.results[0]) }}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-dark" (click)="openModal(trendsModal, student)">trends</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                } @else {
+                    <h2 class="text-center">No students to show</h2>
+                }
+            </div>
+        </div>
+    } @else {
+        <h2 class="text-center">No Details to show</h2>
+    }
+</div>
+
+<ng-template #trendsModal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{ modalDetails.title }}</h4>
+        <a type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></a>
+    </div>
+    <div class="modal-body">
+        <canvas id="trends-chart"></canvas>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
