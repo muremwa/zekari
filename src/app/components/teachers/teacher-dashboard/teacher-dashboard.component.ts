@@ -8,11 +8,14 @@ import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { TrendModalItems } from "../../../services/shared/shared.model";
 import { Chart, registerables } from "chart.js";
 import Utility from "../../../services/shared/Utility";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: 'app-teacher-dashboard',
     standalone: true,
-    imports: [],
+    imports: [
+        RouterLink
+    ],
     templateUrl: './teacher-dashboard.component.html',
     styleUrl: './teacher-dashboard.component.scss'
 })

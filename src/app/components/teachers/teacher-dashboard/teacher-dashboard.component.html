@@ -23,7 +23,12 @@
             </div>
 
             <div class="col-md-8 left-bd">
-                <h2 id="students-title">Your Students</h2>
+                <div class="row">
+                    <h2 class="col-md-10" id="students-title">Your Students</h2>
+                    <div class="col-md-2">
+                        <a routerLink="assignments" class="btn btn-sm btn-outline-dark">Assignments</a>
+                    </div>
+                </div>
 
                 @if (loaders.isLoadingStudents) {
                     <div class="loader-container">

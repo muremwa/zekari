@@ -4,6 +4,7 @@ import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { TeacherService } from "../../../services/teachers/teacher.service";
 import { FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from "@angular/forms";
 import { DatePipe, NgClass, NgStyle } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-assignments',
@@ -12,7 +13,8 @@ import { DatePipe, NgClass, NgStyle } from "@angular/common";
         NgStyle,
         ReactiveFormsModule,
         NgClass,
-        DatePipe
+        DatePipe,
+        RouterLink
     ],
   templateUrl: './assignments.component.html',
   styleUrl: './assignments.component.scss'
