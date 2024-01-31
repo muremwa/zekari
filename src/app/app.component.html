@@ -7,10 +7,10 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
-                <a class="nav-link" routerLink="/admin">Admin</a>
-                <a class="nav-link" routerLink="/teachers">Teachers</a>
-                <a class="nav-link" routerLink="/students">Students</a>
+                <a class="nav-link" [class.active]="router.url === '/'" routerLink="/">Home</a>
+                <a class="nav-link" [class.active]="router.url.startsWith('/admin')" routerLink="/admin">Admin</a>
+                <a class="nav-link" [class.active]="router.url.startsWith('/teachers')" routerLink="/teachers">Teachers</a>
+                <a class="nav-link" [class.active]="router.url.startsWith('/students')" routerLink="/students">Students</a>
             </div>
         </div>
 
