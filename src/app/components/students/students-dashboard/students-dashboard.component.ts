@@ -3,11 +3,15 @@ import { Student, StudentMetrics, StudentResults } from "../../../services/stude
 import { AuthService } from "../../../services/auth/auth.service";
 import { StudentService } from "../../../services/students/student.service";
 import { User } from "../../../services/auth/auth.models";
+import { RouterLink, RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-students-dashboard',
   standalone: true,
-  imports: [],
+    imports: [
+        RouterOutlet,
+        RouterLink
+    ],
   templateUrl: './students-dashboard.component.html',
   styleUrl: './students-dashboard.component.scss'
 })

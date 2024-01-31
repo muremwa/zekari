@@ -1,4 +1,4 @@
 export const environment = {
-    studentUrl: "https://run.mocky.io/v3/94287d60-9961-4ab7-8595-1d319805c156",
-    studentsUrl: "https://run.mocky.io/v3/8c0c14bf-c0a9-4835-afbb-a46cdc63de04"
+    studentUrl: "https://run.mocky.io/v3/3dd5116e-18d3-4ee1-af1a-0dc321a8080a",
+    studentsUrl: "https://run.mocky.io/v3/999ea2ae-1868-445a-b838-ae93bd7ecebc"
 }
