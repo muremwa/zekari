@@ -16,7 +16,7 @@
 
         <div class="d-flex">
             @if (user) {
-                <button class="btn btn-outline-success" (click)="signOut()">Sign out</button>
+                <button class="btn btn-outline-success" (click)="signOut()">{{ user.username }} - Sign out</button>
             } @else {
                 <a class="btn btn-outline-success" routerLink="/sign-in">Sign in</a>
             }

@@ -1,1 +1,51 @@
-<p>students-dashboard works!</p>
+<div class="container">
+    @if (isLoading) {
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
+    } @else if (student) {
+
+        <div class="container row dash-details">
+            <div class="col-md-4 row">
+                <h2 class="col-md-12">Student Details</h2>
+
+                <span class="col-sm-5">Username</span>
+                <span class="col-sm-2">:</span>
+                <span class="col-sm-5">{{ user.username }}</span>
+
+                <span class="col-sm-5">Name</span>
+                <span class="col-sm-2">:</span>
+                <span class="col-sm-5">{{ student.name }}</span>
+
+                <span class="col-sm-5">Grade</span>
+                <span class="col-sm-2">:</span>
+                <span class="col-sm-5">{{ student.grade }}</span>
+            </div>
+
+            <div class="col-md-6 left-bd">
+                <h2>Latest results</h2>
+
+                @if (latestResults) {
+                    <div class="results">
+                        <p>Period: {{ latestResults.period }}</p>
+                        <p>Average: {{ calculateAverage(latestResults.results) }}</p>
+
+                        <div class="row">
+                            @for(result of getResultsArray(latestResults.results); track student) {
+                                <div class="col-sm-5">{{ result[0] }}</div>
+                                <div class="col-sm-2">:</div>
+                                <div class="col-sm-5">{{ result[1] }}</div>
+                            }
+                        </div>
+                    </div>
+                } @else {
+                    <h5 class="text-center">No results to show</h5>
+                }
+            </div>
+        </div>
+
+
+    } @else {
+        <h2 class="text-center">No Details to show</h2>
+    }
+</div>
