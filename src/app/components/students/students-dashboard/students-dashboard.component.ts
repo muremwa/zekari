@@ -51,6 +51,6 @@ export class StudentsDashboardComponent implements OnInit{
 
     calculateAverage(result: StudentMetrics): number {
         const items = this.getResultsArray(result).map(([_, r]) => r);
-        return items.reduce((a, b) => a + b) / items.length;
+        return items.length > 0? items.reduce((a, b) => a + b) / items.length: 0;
     }
 }

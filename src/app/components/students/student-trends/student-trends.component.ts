@@ -57,6 +57,19 @@ export class StudentTrendsComponent implements OnInit, AfterViewInit, OnDestroy 
                             yAxisID: 'yAxis1'
                         }
                     });
+
+                    // averages
+                    this.data.push({
+                        label: 'Average',
+                        data: data.map((res) => {
+                            const scores = Object.entries(res.results).map(([_, sc]) => sc);
+                            return scores.length > 0? (scores.reduce((a, b) => a + b) / scores.length): 0;
+                        }),
+                        backgroundColor: "#008080",
+                        borderColor: "#0b1111",
+                        yAxisID: "yAxis2"
+                    })
+
                     const canvas = this.getCanvas();
                     if (canvas) {
                         this.loadChart(canvas);
