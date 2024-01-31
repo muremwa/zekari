@@ -69,7 +69,7 @@ export class TeacherDashboardComponent implements OnInit {
     }
 
     openModal(ref: TemplateRef<void>, student: Student) {
-        const details = Utility.processStudentChartDetails(student.results);
+        const details = Utility.processStudentChartDetails([...student.results].reverse());
         this.modalDetails = {
             title: `Analyse ${student.name}: Class ${student.grade}`,
             labels: details.labels,

@@ -1,1 +1,57 @@
-<p>admin-dashboard works!</p>
+<div class="container">
+    <div class="dash-details">
+        <h2 class="text-center">Analytics</h2>
+
+        <div class="row">
+            <div class="col-md-10">
+                @if (loaders.isLoadingStudents) {
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                    </div>
+                } @else if (students.length > 0) {
+                    <p>Student Count: {{ students.length }}</p>
+                } @else {
+                    <h5 class="text-center">No Students</h5>
+                }
+
+                @if (this.analytics.averages.length > 0) {
+                    <h3 id="av-title">Averages of subjects per Period</h3>
+                    <div class="table-responsive">
+                        <table class="table accounts-table" aria-describedby="av-title">
+                            <thead class="gray-head">
+                            <tr>
+                                <td>Period</td>
+                                @for (subj of analytics.subjects; track analytics) {
+                                    <td>{{ subj }}</td>
+                                }
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                                @for (val of combineAveragesAndPeriods(analytics.averages, analytics.periods); track analytics) {
+                                    <tr>
+                                        @for (item of val; track analytics) {
+                                            <td>{{ item }}</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-2">
+                @if (loaders.isLoadingTeachers) {
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                    </div>
+                } @else if (teachers.length > 0) {
+                    <p>Teacher Count: {{ teachers.length }}</p>
+                } @else {
+                    <h5 class="text-center">No teachers</h5>
+                }
+            </div>
+        </div>
+    </div>
+</div>
