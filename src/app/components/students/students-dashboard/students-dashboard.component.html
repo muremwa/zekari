@@ -9,17 +9,17 @@
             <div class="col-md-4 row">
                 <h2 class="col-md-12">Student Details</h2>
 
-                <span class="col-sm-5">Username</span>
-                <span class="col-sm-2">:</span>
-                <span class="col-sm-5">{{ user.username }}</span>
+                <span class="col-5">Username</span>
+                <span class="col-2">:</span>
+                <span class="col-5">{{ user.username }}</span>
 
-                <span class="col-sm-5">Name</span>
-                <span class="col-sm-2">:</span>
-                <span class="col-sm-5">{{ student.name }}</span>
+                <span class="col-5">Name</span>
+                <span class="col-2">:</span>
+                <span class="col-5">{{ student.name }}</span>
 
-                <span class="col-sm-5">Class</span>
-                <span class="col-sm-2">:</span>
-                <span class="col-sm-5">{{ student.grade }}</span>
+                <span class="col-5">Class</span>
+                <span class="col-2">:</span>
+                <span class="col-5">{{ student.grade }}</span>
             </div>
 
             <div class="col-md-6 left-bd">
@@ -32,9 +32,9 @@
 
                         <div class="row">
                             @for(result of getResultsArray(latestResults.results); track student) {
-                                <div class="col-sm-5">{{ result[0] }}</div>
-                                <div class="col-sm-2">:</div>
-                                <div class="col-sm-5">{{ result[1] }}</div>
+                                <div class="col-5">{{ result[0] }}</div>
+                                <div class="col-2">:</div>
+                                <div class="col-5">{{ result[1] }}</div>
                             }
                         </div>
                     </div>

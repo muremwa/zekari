@@ -4,15 +4,17 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { User } from "./services/auth/auth.models";
 import { Subscription } from "rxjs";
 import { AuthService } from "./services/auth/auth.service";
+import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [CommonModule, RouterOutlet, RouterLink],
+    imports: [CommonModule, RouterOutlet, RouterLink, NgbCollapseModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {
+    isNavCollapsed = true;
     $authUser: Subscription;
     user: User | null;
 

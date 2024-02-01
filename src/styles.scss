@@ -45,3 +45,12 @@ html {
         transform: rotate(360deg);
     }
 }
+
+@media screen and (max-width: 768px) {
+    .left-bd {
+        border-left: unset;
+        border-top: 1px solid rgba(0, 139, 139, 0.55);
+        margin-top: 1em;
+        padding-top: 1em;
+    }
+}

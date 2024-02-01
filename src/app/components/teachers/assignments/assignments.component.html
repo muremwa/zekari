@@ -8,11 +8,13 @@
         <div class="dash-details">
             <div class="row">
                 <h2 class="col-md-8" id="assignments-title">Assignments by {{ teacher.name }}</h2>
-                <div class="col-md-2">
-                    <a routerLink="/teachers" class="btn btn-sm btn-outline-dark">Dashboard</a>
-                </div>
-                <div class="col-md-2">
-                    <button (click)="openModal(saveAssignmentModal)" class="btn btn-outline-dark btn-sm">Add Assignment</button>
+                <div class="col-md-4 row">
+                    <div class="col-6">
+                        <a routerLink="/teachers" class="btn btn-sm btn-outline-dark">Dashboard</a>
+                    </div>
+                    <div class="col-6">
+                        <button (click)="openModal(saveAssignmentModal)" class="btn btn-outline-dark btn-sm">Add Assignment</button>
+                    </div>
                 </div>
             </div>
 
