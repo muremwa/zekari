@@ -21,6 +21,12 @@ export class AppComponent implements OnInit, OnDestroy {
     constructor(private authService: AuthService, public router: Router) {}
 
     ngOnInit(): void {
+        this.router.events.subscribe(
+            (_) => {
+                this.isNavCollapsed = true;
+            }
+        );
+
         this.$authUser = this.authService.user.subscribe({
             next: (data) => this.user = data
         });
