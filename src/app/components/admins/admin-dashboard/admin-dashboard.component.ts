@@ -57,7 +57,7 @@ export class AdminDashboardComponent implements OnInit {
             // loop through all subjects, and get all score for the subject by all students
             rawData[pi] = subjects.map((s) => {
                 const scores = periodResults.map((personResult) => {
-                    const sc = Object.entries(personResult).find(([sb, sc]) => sb === s);
+                    const sc = Object.entries(personResult).find(([sb, _]) => sb === s);
                     return sc? sc[1]: 0
                 });
                 return scores.length > 0? scores.reduce((a, b) => a + b) / scores.length: 0;
@@ -69,8 +69,6 @@ export class AdminDashboardComponent implements OnInit {
             subjects,
             averages: rawData,
         }
-
-        console.log(this.analytics)
     }
 
     combineAveragesAndPeriods(averages: Array<Array<number>>, periods: Array<string>): Array<Array<string | number>> {

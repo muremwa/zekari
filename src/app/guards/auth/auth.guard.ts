@@ -3,7 +3,7 @@ import { inject } from "@angular/core";
 import { AuthService } from "../../services/auth/auth.service";
 
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = (_, state) => {
     const user = inject(AuthService).user.getValue();
 
     if (user) {
@@ -19,9 +19,10 @@ export const authGuard: CanActivateFn = (route, state) => {
             return true;
         }
 
+        inject(AuthService).user.next(null);
         return inject(Router).createUrlTree(
             ['sign-in'],
-            { queryParams: { 'code': 'access' }, queryParamsHandling: 'merge' }
+            { queryParams: { 'code': 'access', 'next': state.url }, queryParamsHandling: 'merge' }
         );
     }
 
