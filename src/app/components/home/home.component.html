@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="dash-details">
+        @if (user) {
+            <div class="text-center">
+                <h2>Welcome {{ user.username }}</h2>
+
+                <p>You are signed in as {{ user.roles.join(", ") }}</p>
+                <div class="text-center">
+                    @if (user.roles.includes("ADMIN")) {
+                        <a routerLink="/admin" class="btn btn-outline-dark">Admin Page</a>
+                    } @else if (user.roles.includes("STUDENT")) {
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <a routerLink="/students" class="col-md-2 btn btn-outline-dark">Students' Page</a>
+                            <div class="col-md-2"></div>
+                            <a routerLink="/students/trends" class="col-md-2 btn btn-outline-dark">Your Trends</a>
+                            <div class="col-md-3"></div>
+                        </div>
+                    } @else if (user.roles.includes("TEACHER")) {
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <a routerLink="/teachers" class="col-md-2 btn btn-outline-dark">Teachers' Page</a>
+                            <div class="col-md-2"></div>
+                            <a routerLink="/teachers/assignments" class="col-md-2 btn btn-outline-dark">Assignments</a>
+                            <div class="col-md-3"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } @else {
+            <div class="text-center">
+                <h2>You need to sign in</h2>
+                <a routerLink="/sign-in" class="btn btn-outline-dark">Sign In</a>
+            </div>
+        }
+    </div>
+</div>
